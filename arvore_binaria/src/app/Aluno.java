@@ -1,14 +1,17 @@
-package app;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.arvore_binaria.app;
 
 /**
  *
- * @author victoriocarvalho
- * 
- * Essa é a classe Aluno que será utilizada como tipo do conteúdo das árvores nos 
- * programas de teste para redigir os relatórios.
+ * @author lorhan.souza
  */
 
-public class Aluno  {
+
+public class Aluno {
+
     private int matricula;
     private String nome;
 
@@ -40,6 +43,4 @@ public class Aluno  {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-
 }
