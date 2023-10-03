@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.mycompany.arvore_binaria.lib;
+package lib;
 
 /**
  *
@@ -17,8 +17,6 @@ public interface IArvoreBinaria<T> {
      * 
      */
     public void adicionar(T novoValor);
-
-
     /**
      * Método para pesquisar por um elemento na árvore e retorná-lo.
      * @param valor - será utilizado para passar o valor da chave a ser buscada. Por exemplo, se for um árvore de Alunos indexada por nome, deve-se passar um objeto do tipo aluno com o nome que se deseja buscar.

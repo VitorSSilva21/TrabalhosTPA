@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.arvore_binaria.app;
+package app;
 
-import com.mycompany.arvore_binaria.lib.IArvoreBinaria;
+import lib.ArvoreBinaria;
+import app.ComparadorAlunoPorMatricula;
+import app.Aluno;
 
 /**
  *
@@ -13,7 +15,11 @@ import com.mycompany.arvore_binaria.lib.IArvoreBinaria;
 public class ProgArvore_Binaria {
 
     public static void main(String[] args) {
-        IArvoreBinaria arvore_binaria = new IArvoreBinaria();
-        System.out.println("Hello World!");
+    	GeradorDeArvores gerador = new GeradorDeArvores();
+    	ComparadorAlunoPorMatricula comp = new ComparadorAlunoPorMatricula();
+        ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<Aluno>(comp);
+        gerador.geraArvorePerfeitamenteBalanceada(1, 5, arvore);
+        System.out.println(arvore.quantidadeNos());
+        System.out.println(arvore.altura());
     }
 }

@@ -113,6 +113,7 @@ public class GeradorDeArvores {
              nome = geraNomeCompleto();
              //Aqui crio um aluno com os dados gerados e o adiciono na árvore.
              arv.adicionar(new Aluno(matricula,nome));
+             System.out.println(arv.altura());
         }     
     }
     

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.arvore_binaria.lib;
+package lib;
 
 /**
  *
@@ -32,19 +32,19 @@ public class No<T> {
         this.chave = chave;
     }
 
-    public No getFilho_esquerda() {
+    public No<T> getFilho_esquerda() {
         return filho_esquerda;
     }
 
-    public void setFilho_esquerda(No filho_esquerda) {
+    public void setFilho_esquerda(No<T> filho_esquerda) {
         this.filho_esquerda = filho_esquerda;
     }
 
-    public No getFilho_direita() {
+    public No<T> getFilho_direita() {
         return filho_direita;
     }
 
-    public void setFilho_direita(No filho_direita) {
+    public void setFilho_direita(No<T> filho_direita) {
         this.filho_direita = filho_direita;
     }
 }
