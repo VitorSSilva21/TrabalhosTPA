@@ -104,24 +104,21 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     }
 
 
-    private String caminharEmOrdem(No<T> r, String resposta){
-        if(r!=null){
-            if(r.getFilho_esquerda() != null){
-                resposta+=r.getFilho_esquerda().getChave().toString() + "/n";;
-                caminharEmOrdem(r.getFilho_esquerda(), resposta);
-            }
-            resposta+=r.getChave() + "/n";
-
-            resposta+=r.getFilho_direita().getChave().toString() + "/n";;
-            caminharEmOrdem(r.getFilho_esquerda(), resposta);
-        }
-        return resposta;
-    }
-    
     @Override
     public String caminharEmOrdem() {
-        String resposta = null;
-        return caminharEmOrdem(this.raiz, resposta);
+        return "[ " + caminhaEmOrdem(this.raiz) + "]";
+    }
+
+    private String caminhaEmOrdem(No<T> r) {
+        if (r == null) {
+            return "";
+        }
+
+        String esquerda = caminhaEmOrdem(r.getFilho_esquerda());
+        String atual = r.getChave().toString();
+        String direita = caminhaEmOrdem(r.getFilho_direita());
+
+        return esquerda + atual +"\n"+ direita;
     }
     
 
