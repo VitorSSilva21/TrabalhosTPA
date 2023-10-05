@@ -18,7 +18,7 @@ public class ProgArvore_Binaria {
     	GeradorDeArvores gerador = new GeradorDeArvores();
     	ComparadorAlunoPorMatricula comp = new ComparadorAlunoPorMatricula();
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<Aluno>(comp);
-        gerador.geraArvorePerfeitamenteBalanceada(1, 5, arvore);
+        gerador.geraArvorePerfeitamenteBalanceada(1, 500, arvore);
         System.out.println(arvore.quantidadeNos());
         System.out.println(arvore.altura());
     }
