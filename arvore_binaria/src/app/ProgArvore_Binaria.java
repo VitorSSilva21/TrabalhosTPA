@@ -2,18 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.arvore_binaria.app;
+package app;
 
-import com.mycompany.arvore_binaria.lib.IArvoreBinaria;
+import lib.ArvoreBinaria;
+import app.ComparadorAlunoPorMatricula;
+import app.Aluno;
 
-/**
- *
- * @author lorhan.souza
- */
 public class ProgArvore_Binaria {
 
     public static void main(String[] args) {
-        IArvoreBinaria arvore_binaria = new IArvoreBinaria();
-        System.out.println("Hello World!");
+    	GeradorDeArvores gerador = new GeradorDeArvores();
+    	ComparadorAlunoPorMatricula comp = new ComparadorAlunoPorMatricula();
+        ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<Aluno>(comp);
+        gerador.geraArvoreDegenerada(100, arvore);
+        System.out.println(arvore.quantidadeNos());
+        System.out.println(arvore.altura());
     }
 }

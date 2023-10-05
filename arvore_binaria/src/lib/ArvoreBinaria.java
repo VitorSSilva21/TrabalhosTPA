@@ -2,9 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.arvore_binaria.lib;
-
-import com.mycompany.arvore_binaria.app.Aluno;
+package lib;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -17,7 +15,6 @@ import java.util.Comparator;
 public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     protected No<T> raiz = null;
     protected Comparator<T> comparador; 
-
     protected No<T> atual = null;
     private ArrayList<No<T>> pilhaDeNavegacao = null;
     
@@ -29,36 +26,41 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         comparador = comp;
     }
 
-    private void adicionar(T novoValor){
-        if (this.atual == null){
-            this.atual = new No<>(novoValor);
+  //ADICIONAR
+    private No<T> _adicionar(No<T> raiz, No<T> novo){
+        if (raiz == null) {
+            return novo;
         }
-        else {
-            if (comparador.compare(novoValor, this.atual.getChave()) < 0) {
-                this.atual.getFilho_esquerda();
-                adicionar(novoValor);
-            } else if (comparador.compare(novoValor, this.atual.getChave()) > 0) {
-                this.atual.getFilho_direita();
-                adicionar(novoValor);
+        else{
+            if (comparador.compare(novo.getChave(), raiz.getChave()) < 0){
+               raiz.setFilho_esquerda(_adicionar(raiz.getFilho_esquerda(),novo));
+              
+            } 
+            else {
+            	raiz.setFilho_direita(_adicionar(raiz.getFilho_direita(),novo));
             }
+            return raiz;
         }
-    }
-    @Override
-    public void adicionar(T novoValor) {
-        this.atual = this.raiz;
-        adicionar(novoValor);
+        
     }
 
-    private T pesquisar(T valor){
+    @Override
+    public void adicionar(T novoValor) {
+    	No<T> novo = new No<T>(novoValor);
+    	this.raiz =  _adicionar(this.raiz, novo);
+        return;
+    }
+
+    private T _pesquisar(T valor){
         this.atual = this.raiz;
 
         if(comparador.compare(valor, this.atual.getChave()) < 0){
             this.atual.getFilho_esquerda();
-            pesquisar(valor);
+            _pesquisar(valor);
         }
         else{
             this.atual.getFilho_direita();
-            pesquisar(valor);
+            _pesquisar(valor);
         }
 
         return this.atual.getChave();
@@ -66,7 +68,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     @Override
     public T pesquisar(T valor) {
         if(this.raiz != null){
-            adicionar(valor);
+            _pesquisar(valor);
         }
 
         return pesquisar(valor);
@@ -77,25 +79,25 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+  //ALTURA    
     @Override
     public int altura() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (int) Math.floor( (Math.log(this.quantidadeNos()) / Math.log(2)));
+    }
+
+//QUANTIDADE NOS
+    private int _quantidadeNos(No<T> no){
+        if(no == null){
+            return 0;
+        }
+        else {
+            return 1 + _quantidadeNos(no.getFilho_esquerda()) + _quantidadeNos(no.getFilho_direita());
+        }
     }
 
     @Override
     public int quantidadeNos() {
-        this.atual = this.raiz;
-        return quantidadeNos(this.atual);
-    }
-
-    private int quantidadeNos(No<T> no) {
-        if (no == null) {
-            return 0;
-        } else {
-            int esquerda = quantidadeNos(no.getFilho_esquerda());
-            int direita = quantidadeNos(no.getFilho_direita());
-            return 1 + esquerda + direita;
-        }
+        return _quantidadeNos(this.raiz);
     }
 
     @Override
