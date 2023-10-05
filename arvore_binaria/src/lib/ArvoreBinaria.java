@@ -1,16 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package lib;
 import java.util.ArrayList;
 import java.util.Comparator;
-
-
-/**
- *
- * @author lorhan.souza
- */
 
 public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     protected No<T> raiz = null;
@@ -71,7 +61,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
             _pesquisar(valor);
         }
 
-        return pesquisar(valor);
+        return _pesquisar(valor);
     }
 
     @Override
@@ -105,33 +95,53 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.    
     }
 
-
-    @Override
-    public String caminharEmOrdem() {
-        return "[ " + caminhaEmOrdem(this.raiz) + "]";
-    }
-
-    private String caminhaEmOrdem(No<T> r) {
+//CAMINHA EM ORDEM
+    private String _caminharEmOrdem(T r) {
         if (r == null) {
             return "";
         }
-
-        String esquerda = caminhaEmOrdem(r.getFilho_esquerda());
-        String atual = r.getChave().toString();
-        String direita = caminhaEmOrdem(r.getFilho_direita());
-
-        return esquerda + atual +"\n"+ direita;
+        return this._caminharEmOrdem(this.obterProximo())+  r.toString()+"\n";
     }
     
-
+    @Override
+    public String caminharEmOrdem() {
+    	this.reiniciarNavegacao();
+        return "[ " + this._caminharEmOrdem( this.obterProximo() ) + "]";
+    }
+    
+//OBTER PROXIMO
+    private T _obterProximo(){
+    	if (this.pilhaDeNavegacao.size() == 0) {
+    		return null;
+    	}
+    	int index = this.pilhaDeNavegacao.size() - 1; 
+    	T aux = this.pilhaDeNavegacao.get(index).getChave();
+    	this.pilhaDeNavegacao.remove(index);
+    	return aux;
+    }
+    
     @Override
     public T obterProximo(){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	return this._obterProximo();
     }
 
+  //REINICIAR NAVEGAÇÃO
+    private void _reiniciarNavegacao(No<T> r) {
+        if (r == null) {
+            return;
+        }
+        else {
+        	_reiniciarNavegacao(r.getFilho_esquerda());
+            this.pilhaDeNavegacao.add(r);
+            _reiniciarNavegacao(r.getFilho_direita());	
+        }
+        return;
+    }
+    
     @Override
-    public void reiniciarNavegacao(){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void reiniciarNavegacao() {
+    	this.pilhaDeNavegacao = new ArrayList<No<T>>();
+        this._reiniciarNavegacao(this.raiz);
     }
-
+  
 }

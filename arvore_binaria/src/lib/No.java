@@ -1,13 +1,5 @@
- /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package lib;
 
-/**
- *
- * @author lorhan.souza
- */
 public class No<T> {
     private T chave; //Armazena objeto de QUALQUER tipo;
     private No<T> filho_esquerda, filho_direita; //Nó de uma árvore binária (sub-árvores esquerda e direita);

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package app;
 
 import lib.ArvoreBinaria;
@@ -17,5 +13,6 @@ public class ProgArvore_Binaria {
         gerador.geraArvoreDegenerada(100, arvore);
         System.out.println(arvore.quantidadeNos());
         System.out.println(arvore.altura());
+        System.out.println(arvore.caminharEmOrdem());
     }
 }
