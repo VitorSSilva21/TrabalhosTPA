@@ -18,7 +18,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         comparador = comp;
     }
 
-  //ADICIONAR
+    
     private No<T> _adicionar(No<T> raiz, No<T> novo){
         if (raiz == null) {
             return novo;
@@ -43,27 +43,33 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return;
     }
 
-    private T _pesquisar(T valor){
-        this.atual = this.raiz;
-
-        if(comparador.compare(valor, this.atual.getChave()) < 0){
-            this.atual.getFilho_esquerda();
-            _pesquisar(valor);
+  /**
+     * Método para pesquisar por um elemento na árvore e retorná-lo.
+     * @param valor e @param r - serão utilizados para passar o valor da chave a ser buscada e para passar o nó "atual" .
+     * Por exemplo, se for um árvore de Alunos indexada por nome, deve-se passar um objeto do tipo aluno com o nome que se deseja buscar.
+     * @return caso tenha sido encontrado um elemento com o valor buscado, o mesmo será retornado. Caso contrário retorna null.
+     */
+    private T _pesquisar(T valor, No<T> r){
+        
+        if(comparador.compare(valor, r.getChave()) < 0){
+            _pesquisar(valor,r.getFilho_esquerda());
         }
         else{
-            this.atual.getFilho_direita();
-            _pesquisar(valor);
+            
+            _pesquisar(valor,r.getFilho_direita());
         }
 
-        return this.atual.getChave();
+        return r.getChave();
     }
+
+    
     @Override
     public T pesquisar(T valor) {
         if(this.raiz != null){
-            _pesquisar(valor);
+            _pesquisar(valor,this.raiz);
         }
 
-        return _pesquisar(valor);
+        return null;
     }
 
     @Override
@@ -71,7 +77,11 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-  //ALTURA 
+    /**
+     * Método que retorna a altura da árvore.
+     * @return No 1° caso retorna 0 quando.
+     * a altura da árvore. Árvores só com raiz tem altura zero(0). Se raiz for nula retorne -1. 
+     */ 
     private int _altura(No<T>r) {
         if(r==null) {
         	return 0;
@@ -96,7 +106,12 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return _altura(this.raiz);
     }
 
-//QUANTIDADE NOS
+    
+    /**
+     * Método que retorna a quantidade de nós da árvore.
+     * @return No 1° caso retorna 0 quando a raiz da árvore é nula.
+     * No 2° retorna 1 + a quantidade de nós da subárvore à esquerda + a quantidade de nós da subárvore à direita.
+     */
     private int _quantidadeNos(No<T> no){
         if(no == null){
             return 0;
@@ -146,7 +161,10 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     	return _caminharEmNivel();
     }
 
-//CAMINHA EM ORDEM
+    /**
+     * Metódo que retona o resultado do caminhamento em ordem na árvore.
+     * @return No 1° caso retorna uma String vazia quando o No r é null. String contendo os toString dos valores armazenados nos nós, separados por " \n ". Os nós devem ser percorridos em ordem. A String deve iniciar com "[" e finalizar com "]"
+     */
     private String _caminharEmOrdem(T r) {
         if (r == null) {
             return "";
@@ -159,8 +177,15 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     	this.reiniciarNavegacao();
         return "[ " + this._caminharEmOrdem( this.obterProximo() ) + "]";
     }
+
     
-//OBTER PROXIMO
+    /**
+     * Metódo que permite iterar sobre os elementos da árvore os retornando em ordem crescente. 
+     * @return No 1° caso retorna null quando o tamanho da Pilha de Navegação é 0. 
+     * No 2° caso retorna o primero nó da pilha de navegação 
+     * No 3° caso retorna 
+     * A primeira vez que o método for chamado retornará o valor do menor elemento da árvore. Na segunda vez, o segundo menor e assim sucessivamente.
+     */
     private T _obterProximo(){
     	if (this.pilhaDeNavegacao.size() == 0) {
     		this.reiniciarNavegacao();
