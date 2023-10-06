@@ -14,5 +14,6 @@ public class ProgArvore_Binaria {
         System.out.println(arvore.quantidadeNos());
         System.out.println(arvore.altura());
         System.out.println(arvore.caminharEmOrdem());
+        System.out.println(arvore.obterProximo());
     }
 }

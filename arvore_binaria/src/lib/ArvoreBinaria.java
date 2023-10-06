@@ -119,7 +119,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         if (r == null) {
             return "";
         }
-        return this._caminharEmOrdem(this.obterProximo())+  r.toString()+"\n";
+        return r.toString() + "\n" + this._caminharEmOrdem(this.obterProximo());
     }
     
     @Override
@@ -131,19 +131,37 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 //OBTER PROXIMO
     private T _obterProximo(){
     	if (this.pilhaDeNavegacao.size() == 0) {
+    		this.reiniciarNavegacao();
     		return null;
     	}
-    	int index = this.pilhaDeNavegacao.size() - 1; 
-    	T aux = this.pilhaDeNavegacao.get(index).getChave();
-    	this.pilhaDeNavegacao.remove(index);
-    	return aux;
+    	this.atual = this.desempilhar();
+    	if(this.atual.getFilho_direita()==null) {
+    		return this.atual.getChave();
+    	}
+    	else {
+    		this.pilhaDeNavegacao.add(this.atual.getFilho_direita());
+    		No<T> aux = this.atual.getFilho_direita();
+    		while (aux.getFilho_esquerda()!=null) {
+    			this.pilhaDeNavegacao.add(aux.getFilho_esquerda());
+    			aux = aux.getFilho_esquerda();
+    		}
+    		return this.atual.getChave();
+    	}
     }
     
     @Override
     public T obterProximo(){
     	return this._obterProximo();
+    	
     }
 
+    private No<T> desempilhar() {
+    	int index = this.pilhaDeNavegacao.size() - 1; 
+    	No<T> aux = this.pilhaDeNavegacao.get(index);
+    	this.pilhaDeNavegacao.remove(index);
+    	return aux;
+    }
+    
   //REINICIAR NAVEGAÇÃO
     private void _reiniciarNavegacao(No<T> r) {
         if (r == null) {
@@ -152,7 +170,6 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         else {
         	_reiniciarNavegacao(r.getFilho_esquerda());
             this.pilhaDeNavegacao.add(r);
-            _reiniciarNavegacao(r.getFilho_direita());	
         }
         return;
     }
