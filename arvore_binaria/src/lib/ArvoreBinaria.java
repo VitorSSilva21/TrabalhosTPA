@@ -117,29 +117,29 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     if (raiz == null) {
         return "[]";
     }
+    //fila para em nos em lista
+    ArrayList<No<T>> fila = new ArrayList<>();
+    fila.add(raiz);
 
-    Queue<No<T>> fila = new LinkedList<>();
-    fila.offer(raiz);
-
-    StringBuilder resultado = new StringBuilder("[");
+    String resultado = "";
     while (!fila.isEmpty()) {
-        No<T> no = fila.poll();
-        resultado.append(no.getChave());
+        No<T> no = fila.remove(fila.size()-1);
+        resultado += (no.getChave().toString());
 
         if (no.getFilho_esquerda() != null) {
-            fila.offer(no.getFilho_esquerda());
+            fila.add(no.getFilho_esquerda());
         }
         if (no.getFilho_direita() != null) {
-            fila.offer(no.getFilho_direita());
+            fila.add(no.getFilho_direita());
         }
 
         if (!fila.isEmpty()) {
-            resultado.append(",");
-            resultado.append("\n");
+            resultado += ",";
+            resultado += "\n";
         }
     }
-    resultado.append("]");
-    return resultado.toString();
+    resultado += "]";
+    return resultado;
 }
     @Override
     public String caminharEmNivel() {
