@@ -50,26 +50,32 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
      * @return caso tenha sido encontrado um elemento com o valor buscado, o mesmo será retornado. Caso contrário retorna null.
      */
     private T _pesquisar(T valor, No<T> r){
-        
-        if(comparador.compare(valor, r.getChave()) < 0){
-            _pesquisar(valor,r.getFilho_esquerda());
+        if(r==null) {
+        	return null;
         }
         else{
-            
-            _pesquisar(valor,r.getFilho_direita());
+        	if (comparador.compare(r.getChave(), valor) == 0) {
+        		return r.getChave();
+        	}
+        	else{
+        		if(comparador.compare(valor, r.getChave()) < 0){
+            		return _pesquisar(valor,r.getFilho_esquerda());
+            	}
+            	else{
+            		return _pesquisar(valor,r.getFilho_direita());
+            	}	
+        	}	
         }
-
-        return r.getChave();
     }
-
     
     @Override
     public T pesquisar(T valor) {
         if(this.raiz != null){
-            _pesquisar(valor,this.raiz);
+            return _pesquisar(valor,this.raiz);
         }
-
-        return null;
+        else {
+        	return null;
+        }
     }
 
     @Override
