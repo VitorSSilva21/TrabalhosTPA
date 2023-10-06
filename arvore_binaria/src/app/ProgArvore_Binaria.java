@@ -10,10 +10,13 @@ public class ProgArvore_Binaria {
     	GeradorDeArvores gerador = new GeradorDeArvores();
     	ComparadorAlunoPorMatricula comp = new ComparadorAlunoPorMatricula();
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<Aluno>(comp);
+        ArvoreBinaria<Aluno> arvore2 = new ArvoreBinaria<Aluno>(comp);
         gerador.geraArvoreDegenerada(100, arvore);
-        System.out.println(arvore.quantidadeNos());
-        System.out.println(arvore.altura());
-        System.out.println(arvore.caminharEmOrdem());
-        System.out.println(arvore.obterProximo());
+        gerador.geraArvorePerfeitamenteBalanceada(0, 100, arvore2);
+        System.out.println(arvore.quantidadeNos()+"\n");
+        System.out.println(arvore.altura()+"\n");
+        System.out.println(arvore.caminharEmOrdem()+"\n");
+        System.out.println(arvore.obterProximo()+"\n");
+        System.out.println(arvore2.caminharEmNivel()+"\n");
     }
 }

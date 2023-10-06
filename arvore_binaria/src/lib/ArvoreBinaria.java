@@ -1,6 +1,8 @@
 package lib;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     protected No<T> raiz = null;
@@ -109,8 +111,9 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         return _quantidadeNos(this.raiz);
     }
 
-    @Override
-    public String caminharEmNivel() {
+//CAMINHAR EM NIVEL
+    
+    private String _caminharEmNivel() {
     if (raiz == null) {
         return "[]";
     }
@@ -123,21 +126,25 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         No<T> no = fila.poll();
         resultado.append(no.getChave());
 
-        if (no.getFilhoEsquerda() != null) {
-            fila.offer(no.getFilhoEsquerda());
+        if (no.getFilho_esquerda() != null) {
+            fila.offer(no.getFilho_esquerda());
         }
-        if (no.getFilhoDireita() != null) {
-            fila.offer(no.getFilhoDireita());
+        if (no.getFilho_direita() != null) {
+            fila.offer(no.getFilho_direita());
         }
 
         if (!fila.isEmpty()) {
-            resultado.append(", ");
+            resultado.append(",");
+            resultado.append("\n");
         }
     }
     resultado.append("]");
-
     return resultado.toString();
 }
+    @Override
+    public String caminharEmNivel() {
+    	return _caminharEmNivel();
+    }
 
 //CAMINHA EM ORDEM
     private String _caminharEmOrdem(T r) {
