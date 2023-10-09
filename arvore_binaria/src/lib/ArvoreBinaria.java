@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
-    protected No<T> raiz = null;
+    public No<T> raiz = null;
     protected Comparator<T> comparador; 
     protected No<T> atual = null;
     private ArrayList<No<T>> pilhaDeNavegacao = null;
@@ -177,19 +177,16 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
     String resultado = "";
     while (!fila.isEmpty()) {
-        No<T> no = fila.remove(fila.size()-1);
+        No<T> no = fila.remove(0);
         resultado += (no.getChave().toString());
+        resultado += ",";
+        resultado += "\n";
 
         if (no.getFilho_esquerda() != null) {
             fila.add(no.getFilho_esquerda());
         }
         if (no.getFilho_direita() != null) {
             fila.add(no.getFilho_direita());
-        }
-
-        if (!fila.isEmpty()) {
-            resultado += ",";
-            resultado += "\n";
         }
     }
     resultado += "]";

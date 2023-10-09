@@ -20,7 +20,5 @@ public class ProgArvore_Binaria {
         
         System.out.println(arvore2.caminharEmNivel()+"\n");
         
-        Aluno teste = new Aluno(2000000010,"joaozinho pereira");
-        System.out.println(arvore2.pesquisar(teste)+"\n");
     }
 }
