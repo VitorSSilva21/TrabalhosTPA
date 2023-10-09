@@ -16,7 +16,13 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         comparador = comp;
     }
 
-    
+    /**
+     * Método privado para adicionar um elemento na árvore.
+     * @param valor - será utilizado para passar a raiz da árvore ou subárvore.
+     * @param novo - será utilizado para passar o nó que será adicionado.
+     * @return No 1° caso retorna o novo nó caso a árvore esteja vazia.
+     * No 2° caso retorna a raiz da árvore com o nó adicionado.
+     */
     private No<T> _adicionar(No<T> raiz, No<T> novo){
         if (raiz == null) {
             return novo;
@@ -34,6 +40,11 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         
     }
 
+    /**
+     * Método público para adicionar um elemento na árvore.
+     * @param valor - será utilizado para passar o valor da chave a ser adicionado.
+     * @return Apesar do método ser void a IDE Eclipse reclama se não tiver um retorno.
+     */
     @Override
     public void adicionar(T novoValor) {
     	No<T> novo = new No<T>(novoValor);
@@ -42,8 +53,9 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     }
 
   /**
-     * Método para pesquisar por um elemento na árvore e retorná-lo.
-     * @param valor e @param r - serão utilizados para passar o valor da chave a ser buscada e para passar o nó "atual" .
+     * Método privado para pesquisar por um elemento na árvore e retorná-lo.
+     * @param valor - será utilizado para passar o valor da chave a ser buscada
+     * @param r - será utilizado para passar o nó "atual".
      * Por exemplo, se for um árvore de Alunos indexada por nome, deve-se passar um objeto do tipo aluno com o nome que se deseja buscar.
      * @return caso tenha sido encontrado um elemento com o valor buscado, o mesmo será retornado. Caso contrário retorna null.
      */
@@ -65,7 +77,14 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         	}	
         }
     }
-    
+
+    /**
+     * Método público para pesquisar por um elemento na árvore e retorná-lo.
+     * @param valor - será utilizado para passar o valor da chave a ser buscada.
+     * Por exemplo, se for um árvore de Alunos indexada por nome, deve-se passar um objeto do tipo aluno com o nome que se deseja buscar.
+     * @return No 1° caso retornará  o resultado do método privado de pesquisa passando o valor e a raiz como parâmetros.
+     * Caso contrário retorna null.
+     */
     @Override
     public T pesquisar(T valor) {
         if(this.raiz != null){
@@ -76,13 +95,18 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
     }
 
+    /**
+     * Método público que remove um nó da árvore.
+     * @param valor - será utilizado para passar o valor da chave a ser removido.
+     * @return ????
+     */
     @Override
     public T remover(T valor) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
-     * Método que retorna a altura da árvore.
+     * Método privado que retorna a altura da árvore.
      * @return No 1° caso retorna 0 quando.
      * a altura da árvore. Árvores só com raiz tem altura zero(0). Se raiz for nula retorne -1. 
      */ 
@@ -104,7 +128,11 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         	}
         }
     }
-    
+
+    /**
+     * Método público que retorna a altura da árvore.
+     * @return chama o método privado de calcular altura passando a raiz como parâmetro.
+     */
     @Override
     public int altura() {
         return _altura(this.raiz);
@@ -112,7 +140,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
     
     /**
-     * Método que retorna a quantidade de nós da árvore.
+     * Método privado que retorna a quantidade de nós da árvore.
      * @return No 1° caso retorna 0 quando a raiz da árvore é nula.
      * No 2° retorna 1 + a quantidade de nós da subárvore à esquerda + a quantidade de nós da subárvore à direita.
      */
@@ -125,13 +153,20 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
     }
 
+    /**
+     * Método público que retorna a quantidade de nós da árvore.
+     * @return a quantidade de nós da árcore.
+     */
     @Override
     public int quantidadeNos() {
         return _quantidadeNos(this.raiz);
     }
 
-//CAMINHAR EM NIVEL
-    
+    /**
+     * Método privado que retona o resultado do caminhamento em nível na árvore.
+     * @return No 1° caso retorna uma String com "[]" quando a árvore está vazia.
+     * No 2° String contendo os toString dos valores armazenados nos nós, separados por " \n ". Os nós devem ser percorridos em ordem. A String deve iniciar com "[" e finalizar com "]"
+     */
     private String _caminharEmNivel() {
     if (raiz == null) {
         return "[]";
@@ -166,7 +201,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     }
 
     /**
-     * Metódo que retona o resultado do caminhamento em ordem na árvore.
+     * Metódo privado que retona o resultado do caminhamento em ordem na árvore.
      * @return No 1° caso retorna uma String vazia quando o No r é null. String contendo os toString dos valores armazenados nos nós, separados por " \n ". Os nós devem ser percorridos em ordem. A String deve iniciar com "[" e finalizar com "]"
      */
     private String _caminharEmOrdem(T r) {
@@ -175,7 +210,11 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
         return r.toString() + "\n" + this._caminharEmOrdem(this.obterProximo());
     }
-    
+
+    /**
+     * Metódo público que retona em uma String o resultado do caminhamento em ordem na árvore.
+     * @return retorna uma String contendo os toString dos valores armazenados nos nós, separados por " \n ". Os nós devem ser percorridos em ordem. A String deve iniciar com "[" e finalizar com "]"
+     */
     @Override
     public String caminharEmOrdem() {
     	this.reiniciarNavegacao();
@@ -184,10 +223,10 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
     
     /**
-     * Metódo que permite iterar sobre os elementos da árvore os retornando em ordem crescente. 
+     * Metódo privado que permite iterar sobre os elementos da árvore os retornando em ordem crescente.
      * @return No 1° caso retorna null quando o tamanho da Pilha de Navegação é 0. 
-     * No 2° caso retorna o primero nó da pilha de navegação 
-     * No 3° caso retorna 
+     * No 2° caso retorna o primero nó da pilha de navegação caso não exista filho à direita
+     * No 3° caso retorna o primero nó da pilha de navegação
      * A primeira vez que o método for chamado retornará o valor do menor elemento da árvore. Na segunda vez, o segundo menor e assim sucessivamente.
      */
     private T _obterProximo(){
@@ -209,21 +248,31 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     		return this.atual.getChave();
     	}
     }
-    
+
+    /**
+     * Método público que retorna o próximo nó da árvore de forma crescente.
+     * @return o próximo nó da árvore de forma crescente a cada chamada.
+     */
     @Override
     public T obterProximo(){
     	return this._obterProximo();
     	
     }
-
+    /**
+     * Metódo privado auxiliar que permite desempilhar o nó no topo da pilha de navegação.
+     * @return Nó desempilhado, chamado aqui de "aux".
+     */
     private No<T> desempilhar() {
     	int index = this.pilhaDeNavegacao.size() - 1; 
     	No<T> aux = this.pilhaDeNavegacao.get(index);
     	this.pilhaDeNavegacao.remove(index);
     	return aux;
     }
-    
-  //REINICIAR NAVEGAÇÃO
+
+    /**
+     * Metódo privado que permite reiniciar a navegação.
+     * @return Ignorar os returns, pois a IDE Eclipse tem algum problema com métodos "void" não retornando algum resultado.
+     */
     private void _reiniciarNavegacao(No<T> r) {
         if (r == null) {
             return;
@@ -234,7 +283,10 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         }
         return;
     }
-    
+
+    /**
+     * Metódo público que permite reiniciar a navegação "esvaziando a pilha", realocando o ArrayList e reiniciando a navegação passando o nó raiz como parâmetro.
+     */
     @Override
     public void reiniciarNavegacao() {
     	this.pilhaDeNavegacao = new ArrayList<No<T>>();
