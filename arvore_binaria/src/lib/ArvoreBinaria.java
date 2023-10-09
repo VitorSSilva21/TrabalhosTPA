@@ -1,8 +1,6 @@
 package lib;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     protected No<T> raiz = null;
