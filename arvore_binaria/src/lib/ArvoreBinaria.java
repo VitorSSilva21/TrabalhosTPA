@@ -24,6 +24,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
      * No 2° caso retorna a raiz da árvore com o nó adicionado.
      */
     private No<T> _adicionar(No<T> raiz, No<T> novo){
+    	//caso árvore esteja vazia
         if (raiz == null) {
             return novo;
         }
@@ -64,13 +65,16 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         	return null;
         }
         else{
+        	//se valor for igual a raiz da subarvore
         	if (comparador.compare(r.getChave(), valor) == 0) {
         		return r.getChave();
         	}
         	else{
+        		//se valor estiver a esquerda
         		if(comparador.compare(valor, r.getChave()) < 0){
             		return _pesquisar(valor,r.getFilho_esquerda());
             	}
+        		//se valor estiver a direita
             	else{
             		return _pesquisar(valor,r.getFilho_direita());
             	}	
@@ -96,8 +100,11 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     }
 
     /**
-     * Método público que remove um nó da árvore.
-     * @param valor - será utilizado para passar o valor da chave a ser removido.
+     * Método privado que remove um nó da árvore.
+     * @param r - raiz da subarvore.
+     * @param p - pai de r
+     * @param d - direção da raiz r em relação ao pai, se é filho direito ou esquerdo
+     * @param valor - valor a ser procurado e excluído
      * @return caso tenha sido encontrado um elemento com o valor buscado, o elemento será removido da árvore e seu valor (do tipo T) será retornado. Caso contrário retorna null.
      */
     private T _remover(No<T>r, No<T>p, int d, T valor) {
@@ -156,7 +163,9 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         	}
         	//se o nó tem dois filhos
         	else {
+        		//aux para maior entre os menores
         		No<T> aux = r.getFilho_esquerda();
+        		//aux2 para pai do aux1
         		No<T> aux2 = r;
         		while (aux.getFilho_direita()!=null) {
         			aux = aux.getFilho_direita();
@@ -166,13 +175,19 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         			else
         				aux2 = aux2.getFilho_direita();
         		}
+        		//troca o valor da raiz de subarvore pelo maior dentre os menores
     			r.setChave(aux.getChave());
+    			//usa aux2 para remover o maior da subarvore esquerda da posição original
     			aux2.setFilho_direita(null);
         	}
         }
         return ret;
     }
-    
+    /**
+     * Método público que remove um nó da árvore.
+     * @param valor - será utilizado para passar o valor da chave a ser removido.
+     * @return caso tenha sido encontrado um elemento com o valor buscado, o elemento será removido da árvore e seu valor (do tipo T) será retornado. Caso contrário retorna null.
+     */
     @Override
     public T remover(T valor) {
         return _remover(this.raiz,this.raiz,0,valor);
@@ -193,9 +208,11 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
         else {
         	int altE = _altura(r.getFilho_direita());
         	int altD = _altura(r.getFilho_esquerda());
+        	//caso subarvore direita seja maior
         	if(altD>altE) {
         		return 1+altD;
         	}
+        	//caso subarvore esquerda seja maior
         	else {
         		return 1+altE;
         	}
@@ -287,6 +304,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
      */
     @Override
     public String caminharEmOrdem() {
+    	//usa o método obter próximo para simplificar o código desta
     	this.reiniciarNavegacao();
         return "[ " + this._caminharEmOrdem( this.obterProximo() ) + "]";
     }
@@ -308,6 +326,7 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     	if(this.atual.getFilho_direita()==null) {
     		return this.atual.getChave();
     	}
+    	//caso exista subarvore a direita, empilha toda a subarvore direita em ordem
     	else {
     		this.pilhaDeNavegacao.add(this.atual.getFilho_direita());
     		No<T> aux = this.atual.getFilho_direita();
@@ -341,13 +360,15 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
 
     /**
      * Metódo privado que permite reiniciar a navegação.
-     * @return Ignorar os returns, pois a IDE Eclipse tem algum problema com métodos "void" não retornando algum resultado.
+     * @param r - raiz da subarvore
+     * @return return void
      */
     private void _reiniciarNavegacao(No<T> r) {
         if (r == null) {
             return;
         }
         else {
+        	//
         	_reiniciarNavegacao(r.getFilho_esquerda());
             this.pilhaDeNavegacao.add(r);
         }

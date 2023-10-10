@@ -139,5 +139,4 @@ public class GeradorDeArvores {
             geraArvorePerfeitamenteBalanceada(media+1,max,arv);
         }
     }
-
 }
