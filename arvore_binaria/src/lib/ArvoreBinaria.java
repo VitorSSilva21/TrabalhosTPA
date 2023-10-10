@@ -98,6 +98,9 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     /**
      * Método público que remove um nó da árvore.
      * @param valor - será utilizado para passar o valor da chave a ser removido.
+     * @param d - será utilizado para passar um inteiro em que 0 remove o nó mais a esquerda e 1 remove o nó mais a direita.
+     * @param p - será utilizado para passar um nó do tipo T.
+     * @param r - será utilizado para passar um nó do tipo T.
      * @return caso tenha sido encontrado um elemento com o valor buscado, o elemento será removido da árvore e seu valor (do tipo T) será retornado. Caso contrário retorna null.
      */
     private T _remover(No<T>r, No<T>p, int d, T valor) {
