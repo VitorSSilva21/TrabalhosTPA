@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
-    public No<T> raiz = null;
+    protected No<T> raiz = null;
     protected Comparator<T> comparador; 
     protected No<T> atual = null;
     private ArrayList<No<T>> pilhaDeNavegacao = null;
@@ -98,11 +98,84 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     /**
      * Método público que remove um nó da árvore.
      * @param valor - será utilizado para passar o valor da chave a ser removido.
-     * @return ????
+     * @return caso tenha sido encontrado um elemento com o valor buscado, o elemento será removido da árvore e seu valor (do tipo T) será retornado. Caso contrário retorna null.
      */
+    private T _remover(No<T>r, No<T>p, int d, T valor) {
+    	//retorna nulo se receber nulo
+    	if(r==null) {
+    		return null;
+    	}
+    	//para guardar o valor de retorno
+    	T ret = r.getChave();
+    	//se a arvore estiver vazia
+        if (this.raiz==null) {
+        	return null;
+        }
+        //se o valor for menor que a raiz
+        else if(comparador.compare( valor,r.getChave())<0){
+        	_remover(r.getFilho_esquerda(),r,0,valor);
+        }
+        //se o valor for maior que a raiz
+        else if(comparador.compare( valor,r.getChave())>0){
+            _remover(r.getFilho_direita(),r,1,valor);
+        }
+        //se o valor da raiz for igual o valor recebido
+        else {
+        	//se o nó não tem filhos
+        	if(r.getFilho_esquerda()==null&&r.getFilho_direita()==null){
+        		//se a raiz r for o filho esquerdo de p
+        		if(d==0) {
+        			p.setFilho_esquerda(null);
+        		}
+        		//se for o filho direito
+        		else {
+        			p.setFilho_direita(null);
+        		}
+        	}
+        	//se o nó tem apenas um filho e é o esquerdo
+        	else if(r.getFilho_direita()==null && r.getFilho_esquerda()!=null) {
+        		//se a raiz r for o filho esquerdo de p
+        		if(d==0) {
+        			p.setFilho_esquerda(r.getFilho_esquerda());
+        		}
+        		//se for o filho direito
+        		else {
+        			p.setFilho_direita(r.getFilho_esquerda());
+        		}
+        	}
+        	//se o nó tem apenas um filhoe e é o direito
+        	else if(r.getFilho_direita()!=null && r.getFilho_esquerda()==null) {
+        		//se a raiz r for o filho esquerdo de p
+        		if(d==0) {
+        			p.setFilho_esquerda(r.getFilho_direita());
+        		}
+        		//se for o filho direito
+        		else {
+        			p.setFilho_direita(r.getFilho_direita());
+        		}
+        	}
+        	//se o nó tem dois filhos
+        	else {
+        		No<T> aux = r.getFilho_esquerda();
+        		No<T> aux2 = r;
+        		while (aux.getFilho_direita()!=null) {
+        			aux = aux.getFilho_direita();
+        			if(aux2 == r){
+        				aux2 = aux2.getFilho_esquerda();
+        			}
+        			else
+        				aux2 = aux2.getFilho_direita();
+        		}
+    			r.setChave(aux.getChave());
+    			aux2.setFilho_direita(null);
+        	}
+        }
+        return ret;
+    }
+    
     @Override
     public T remover(T valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return _remover(this.raiz,this.raiz,0,valor);
     }
 
     /**
