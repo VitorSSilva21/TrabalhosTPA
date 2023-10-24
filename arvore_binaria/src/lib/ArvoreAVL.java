@@ -50,6 +50,60 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
         raiz.setFilhoDireita(rotaçãoDireita(raiz.getFilhoDireita()));
         return rotacaoEsquerda(raiz);
     }
+
+    private No<T> _adicionar(No<T> atual, No<T> novo){
+        if(novo.getValor().compareTo(noAtual.getValor()) < 0){
+            if(atual.getFilhoEsquerda() == null){
+                atual.setFilhoEsquerda(novo);
+            }
+            else{
+                atual.setFilhoEsquerda(_adicionar(atual.getFilhoEsquerda(),novo));
+            }
+        }
+        else{
+            if(atual.getFilhoDireita() == null){
+                atual.setFilhoDireita(novo);    
+            }
+            else{
+                atual.setFilhoDireita(_adicionar(atual.getFilhoDireita(),novo));
+            }
+        }
+
+        return atual;
+    }
+
+    @Override
+    private No<T> _adicionar(No<T> noAtual, No<T> novoNo){
+        raiz = super._adicionar(noAtual,novoNo);
+
+        if(noAtual.fatorBalanceamento() > 1){
+            if(noAtual.getFilhoDireita().fatorBalanceamento() > 0){
+                noAtual.rotacaoEsquerda(noAtual);
+            }
+            else{
+                noAtual.rotacaoDireitaEsquerda(noAtual);
+            }
+        }else{
+            if(noAtual.getfilhoEsquerda().fatorBalanceamento() < 0){
+                noAtual.rotacaoDireita(noAtual);
+            }
+            else{
+                noAtual.rotacaoEsquerdaDireita(noAtual);
+            }
+            }
+        }
+        return raiz;
+    }
+
+    public void adicionarElemento(T valor){
+        No<T> no = new No<T>(valor);
+        if (this.raiz == null){
+            this.raiz = no;
+        }
+        else{
+            this.raiz = _adicionar(this.raiz, no);
+        }
+    }
     
     //Implementar métodos para efetuar o balanceamento e sobrescrever método de adicionar elemento...
 
