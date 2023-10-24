@@ -41,6 +41,15 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
         raiz.setFilhoEsquerda(rotaçãoEsquerda(raiz.getFilhoEsquerda()));
         return rotacaoDireita(raiz);
     }
+
+    /**
+     * @param No raiz da subarvore com elemento do tipo T armazenado.
+     * @return No<T> com a rotação feita no trecho da árvore concluída para a Esquerda após fazer uma rotação para a Direita no Filho à Direita da raiz.
+     */
+    private No<T> rotacaoDireitaEsquerda(No<T> raiz){
+        raiz.setFilhoDireita(rotaçãoDireita(raiz.getFilhoDireita()));
+        return rotacaoEsquerda(raiz);
+    }
     
     //Implementar métodos para efetuar o balanceamento e sobrescrever método de adicionar elemento...
 
