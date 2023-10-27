@@ -15,11 +15,11 @@ public class No<T> {
         this.filho_esquerda = this.filho_direita = null; //Setando os nós filhos como null;
     }
 
-    private obterAltura(No<T> raiz){
+    private int obterAltura(No<T> raiz){
         
     }
     
-    public obterAltura(){
+    public int obterAltura(){
         return obterAltura(this);
     }
 

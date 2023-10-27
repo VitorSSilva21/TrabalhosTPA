@@ -12,7 +12,7 @@ public class ProgArvore_Binaria {
         ArvoreBinaria<Aluno> arvore = new ArvoreBinaria<Aluno>(comp);
         ArvoreBinaria<Aluno> arvore2 = new ArvoreBinaria<Aluno>(comp);
         gerador.geraArvoreDegenerada(100, arvore);
-        gerador.geraArvorePerfeitamenteBalanceada(0,10, arvore2);
+        /*gerador.geraArvorePerfeitamenteBalanceada(0,10, arvore2);
         System.out.println(arvore.quantidadeNos()+"\n");
         System.out.println(arvore.altura()+"\n");
         System.out.println(arvore.caminharEmOrdem()+"\n");
@@ -25,6 +25,14 @@ public class ProgArvore_Binaria {
         Aluno aluno2 = new Aluno(2000000009,"teste");
         System.out.println(arvore2.remover(aluno2)+"\n");
         System.out.println(arvore2.caminharEmNivel()+"\n");
+        */
+        arvore = new ArvoreBinaria<Aluno>(comp);
+        gerador.geraArvorePerfeitamenteBalanceada(0,10, arvore);
+        System.out.println(arvore.caminharEmOrdem());
+
+        
+ 
+        
         
     }
 }

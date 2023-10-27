@@ -1,7 +1,7 @@
 package lib;
 
 import java.util.Comparator;
-import src.lib.ArvoreBinaria;
+import lib.ArvoreBinaria;
 
 public class ArvoreAVL <T> extends ArvoreBinaria<T>{
 
@@ -14,9 +14,9 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
      * @return No<T> com a rotação feita no trecho da árvore concluída  para a Esquerda
      */
     private No<T> rotacaoEsquerda(No<T> raiz){
-        No<T> rotacionado = raiz.getFilhoDireita();
-        raiz.setFilhoDireita(rotacionado.getFilhoEsquerda());
-        rotacionado.setFilhoEsquerda(raiz);
+        No<T> rotacionado = raiz.getFilho_direita();
+        raiz.setFilho_direita(rotacionado.getFilho_esquerda());
+        rotacionado.setFilho_esquerda(raiz);
 
         return rotacionado;
     }
@@ -26,9 +26,9 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
      * @return No<T> com a rotação feita no trecho da árvore concluída para a Direita
      */
     private No<T> rotacaoDireita(No<T> raiz){
-        No<T> rotacionado = raiz.getFilhoEsquerda();
-        raiz.setFilhoEsquerda(rotacionado.getFilhoDireita());
-        rotacionado.setFilhoDireita(raiz);
+        No<T> rotacionado = raiz.getFilho_esquerda();
+        raiz.setFilho_esquerda(rotacionado.getFilho_direita());
+        rotacionado.setFilho_direita(raiz);
 
         return rotacionado;
     }
@@ -38,7 +38,7 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
      * @return No<T> com a rotação feita no trecho da árvore concluída para a Direita após fazer uma rotação para a Esquerda no Filho à Esquerda da raiz.
      */
     private No<T> rotacaoEsquerdaDireita(No<T> raiz){
-        raiz.setFilhoEsquerda(rotaçãoEsquerda(raiz.getFilhoEsquerda()));
+        raiz.setFilho_esquerda(this.rotacaoEsquerda(raiz.getFilho_esquerda()));
         return rotacaoDireita(raiz);
     }
 
@@ -47,53 +47,31 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
      * @return No<T> com a rotação feita no trecho da árvore concluída para a Esquerda após fazer uma rotação para a Direita no Filho à Direita da raiz.
      */
     private No<T> rotacaoDireitaEsquerda(No<T> raiz){
-        raiz.setFilhoDireita(rotaçãoDireita(raiz.getFilhoDireita()));
+        raiz.setFilho_direita(rotacaoDireita(raiz.getFilho_direita()));
         return rotacaoEsquerda(raiz);
     }
 
-    private No<T> _adicionar(No<T> atual, No<T> novo){
-        if(novo.getValor().compareTo(noAtual.getValor()) < 0){
-            if(atual.getFilhoEsquerda() == null){
-                atual.setFilhoEsquerda(novo);
+@Override
+    protected No<T> _adicionar(No<T> raiz, No<T> novo){
+        raiz = super._adicionar(raiz,novo);
+
+        if(raiz.fatorBalanceamento() > 1){
+            if(raiz.getFilho_direita().fatorBalanceamento() > 0){
+                this.rotacaoEsquerda(raiz);
             }
             else{
-                atual.setFilhoEsquerda(_adicionar(atual.getFilhoEsquerda(),novo));
-            }
-        }
-        else{
-            if(atual.getFilhoDireita() == null){
-                atual.setFilhoDireita(novo);    
-            }
-            else{
-                atual.setFilhoDireita(_adicionar(atual.getFilhoDireita(),novo));
-            }
-        }
-
-        return atual;
-    }
-
-    @Override
-    private No<T> _adicionar(No<T> noAtual, No<T> novoNo){
-        raiz = super._adicionar(noAtual,novoNo);
-
-        if(noAtual.fatorBalanceamento() > 1){
-            if(noAtual.getFilhoDireita().fatorBalanceamento() > 0){
-                noAtual.rotacaoEsquerda(noAtual);
-            }
-            else{
-                noAtual.rotacaoDireitaEsquerda(noAtual);
+                this.rotacaoDireitaEsquerda(raiz);
             }
         }else{
-            if(noAtual.getfilhoEsquerda().fatorBalanceamento() < 0){
-                noAtual.rotacaoDireita(noAtual);
+            if(raiz.getFilho_esquerda().fatorBalanceamento() < 0){
+                this.rotacaoDireita(raiz);
             }
             else{
-                noAtual.rotacaoEsquerdaDireita(noAtual);
+                this.rotacaoEsquerdaDireita(raiz);
             }
             }
-        }
         return raiz;
-    }
+        }
 
     public void adicionarElemento(T valor){
         No<T> no = new No<T>(valor);
