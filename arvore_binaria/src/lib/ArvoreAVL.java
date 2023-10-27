@@ -9,6 +9,31 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
         super(comparator);
     }
 
+    /* metodo para obter a altura */
+    public int obterAltura(){
+        return obterAltura(this);
+    }
+
+    private int obterAltura(No<T> r){
+        if (r == null) {
+            return -1;
+        }
+        else{
+            int hd = obterAltura(r.getFilho_direita());
+            int he = obterAltura(r.getFilho_esquerda());
+            if(hd>he) {
+                return hd + 1;
+            }
+            else{
+                return he + 1;
+            }
+        }
+    }
+
+    public int fatorBalanceamento(){
+        return obterAltura(this.filho_direita) - obterAltura(this.filho_esquerda);
+    }
+
     /**
      * @param No raiz da subarvore com elemento do tipo T armazenado.
      * @return No<T> com a rotação feita no trecho da árvore concluída  para a Esquerda
