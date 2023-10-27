@@ -14,6 +14,18 @@ public class No<T> {
         this.chave = null;
         this.filho_esquerda = this.filho_direita = null; //Setando os nós filhos como null;
     }
+
+    private obterAltura(No<T> raiz){
+        
+    }
+    
+    public obterAltura(){
+        return obterAltura(this);
+    }
+
+    public int fatorBalanceamento(){
+        return obterAltura(this.getFilho_direita()) - obterAltura(this.getFilho_Esquerda());
+    }
     
     /*GETTERs E SETERs*/
     public T getChave() {
