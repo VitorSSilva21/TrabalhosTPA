@@ -15,8 +15,25 @@ public class No<T> {
         this.filho_esquerda = this.filho_direita = null; //Setando os nós filhos como null;
     }
 
-    private int obterAltura(No<T> raiz){
-        
+    
+    private int obterAltura(No<T> r){
+        if (r == null) {
+            return -1;
+        }
+        else{
+            int hd = obterAltura(r.getFilho_direita());
+            int he = obterAltura(r.getFilho_esquerda());
+            if(hd>he) {
+                return hd + 1;
+            }
+            else{
+                return he + 1;
+            }
+        }
+    }
+
+    public int fatorBalanceamento(){
+        return obterAltura(this.filho_direita) - obterAltura(this.filho_esquerda);
     }
     
     public int obterAltura(){
