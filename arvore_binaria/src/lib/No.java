@@ -24,7 +24,7 @@ public class No<T> {
     }
 
     public int fatorBalanceamento(){
-        return obterAltura(this.getFilho_direita()) - obterAltura(this.getFilho_Esquerda());
+        return obterAltura(this.getFilho_direita()) - obterAltura(this.getFilho_esquerda());
     }
     
     /*GETTERs E SETERs*/
