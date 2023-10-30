@@ -1,7 +1,6 @@
 package lib;
 
 import java.util.Comparator;
-import lib.ArvoreBinaria;
 
 public class ArvoreAVL <T> extends ArvoreBinaria<T>{
 
@@ -16,8 +15,7 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
     private No<T> rotacaoEsquerda(No<T> raiz){
         No<T> rotacionado = raiz.getFilho_direita();
         raiz.setFilho_direita(rotacionado.getFilho_esquerda());
-        rotacionado.setFilho_esquerda(raiz);
-
+        rotacionado.setFilho_esquerda(raiz);	
         return rotacionado;
     }
 
@@ -29,7 +27,6 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
         No<T> rotacionado = raiz.getFilho_esquerda();
         raiz.setFilho_esquerda(rotacionado.getFilho_direita());
         rotacionado.setFilho_direita(raiz);
-
         return rotacionado;
     }
 
@@ -55,23 +52,34 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
     protected No<T> _adicionar(No<T> raiz, No<T> novo){
         raiz = super._adicionar(raiz,novo);
 
-        if(raiz.fatorBalanceamento() > 1){
-            if(raiz.getFilho_direita().fatorBalanceamento() > 0){
-                this.rotacaoEsquerda(raiz);
+        if(this.fatorBalanceamento(raiz) > 1){
+            if(fatorBalanceamento(raiz.getFilho_direita()) > 0){
+                raiz = this.rotacaoEsquerda(raiz);
             }
             else{
-                this.rotacaoDireitaEsquerda(raiz);
+                raiz = this.rotacaoDireitaEsquerda(raiz);
             }
-        }else{
-            if(raiz.getFilho_esquerda().fatorBalanceamento() < 0){
-                this.rotacaoDireita(raiz);
-            }
-            else{
-                this.rotacaoEsquerdaDireita(raiz);
-            }
-            }
-        return raiz;
         }
+        else if(this.fatorBalanceamento(raiz) < -1){
+            if(fatorBalanceamento(raiz.getFilho_esquerda()) < 0){
+                raiz = this.rotacaoDireita(raiz);
+            }
+            else{
+                raiz = this.rotacaoEsquerdaDireita(raiz);
+            }
+        }
+        return raiz;
+}
+
+	private int fatorBalanceamento(No<T> r){
+		if(r == null) {
+			return -1;
+		}
+		int alturaDir, alturaEsq = 0;
+		alturaDir = r.obterAltura(r.getFilho_direita());
+		alturaEsq = r.obterAltura(r.getFilho_esquerda());
+	    return  (alturaDir - alturaEsq);
+	}
 
     public void adicionarElemento(T valor){
         No<T> no = new No<T>(valor);
