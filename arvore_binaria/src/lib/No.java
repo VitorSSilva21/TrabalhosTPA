@@ -16,13 +16,13 @@ public class No<T> {
     }
 
     
-    public int obterAltura(No<T> r){
+    private int _obterAltura(No<T> r){
         if (r == null) {
             return -1;
         }
         else{
-            int hd = obterAltura(r.getFilho_direita());
-            int he = obterAltura(r.getFilho_esquerda());
+            int hd = _obterAltura(r.getFilho_direita());
+            int he = _obterAltura(r.getFilho_esquerda());
             if(hd>he) {
                 return hd + 1;
             }
@@ -31,11 +31,15 @@ public class No<T> {
             }
         }
     }
+    
+    public int obterAltura(){
+        return _obterAltura(this);
+    }
 
     public int fatorBalanceamento(){
     	int alturaDir, alturaEsq = 0;
-    	alturaDir = obterAltura(this.getFilho_direita());
-    	alturaEsq = obterAltura(this.getFilho_esquerda());
+    	alturaDir = this._obterAltura(this.getFilho_direita());
+    	alturaEsq = this._obterAltura(this.getFilho_esquerda());
         return  (alturaDir - alturaEsq);
     }
     

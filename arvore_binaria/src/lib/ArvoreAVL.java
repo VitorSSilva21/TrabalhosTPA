@@ -52,16 +52,16 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
     protected No<T> _adicionar(No<T> raiz, No<T> novo){
         raiz = super._adicionar(raiz,novo);
 
-        if(this.fatorBalanceamento(raiz) > 1){
-            if(fatorBalanceamento(raiz.getFilho_direita()) > 0){
+        if(raiz.fatorBalanceamento() > 1){
+            if(raiz.getFilho_direita().fatorBalanceamento() > 0){
                 raiz = this.rotacaoEsquerda(raiz);
             }
             else{
                 raiz = this.rotacaoDireitaEsquerda(raiz);
             }
         }
-        else if(this.fatorBalanceamento(raiz) < -1){
-            if(fatorBalanceamento(raiz.getFilho_esquerda()) < 0){
+        else if(raiz.fatorBalanceamento() < -1){
+            if(raiz.getFilho_esquerda().fatorBalanceamento() < 0){
                 raiz = this.rotacaoDireita(raiz);
             }
             else{
@@ -71,6 +71,7 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
         return raiz;
 }
 
+/*
 	private int fatorBalanceamento(No<T> r){
 		if(r == null) {
 			return -1;
@@ -80,6 +81,7 @@ public class ArvoreAVL <T> extends ArvoreBinaria<T>{
 		alturaEsq = r.obterAltura(r.getFilho_esquerda());
 	    return  (alturaDir - alturaEsq);
 	}
+*/
 
     public void adicionarElemento(T valor){
         No<T> no = new No<T>(valor);
