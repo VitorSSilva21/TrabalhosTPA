@@ -15,16 +15,32 @@ public class No<T> {
         this.filho_esquerda = this.filho_direita = null; //Setando os nós filhos como null;
     }
 
-    private int obterAltura(No<T> raiz){
-        
+    
+    private int _obterAltura(No<T> r){
+        if (r == null) {
+            return -1;
+        }
+        else{
+            int hd = _obterAltura(r.getFilho_direita());
+            int he = _obterAltura(r.getFilho_esquerda());
+            if(hd>he) {
+                return hd + 1;
+            }
+            else{
+                return he + 1;
+            }
+        }
     }
     
     public int obterAltura(){
-        return obterAltura(this);
+        return _obterAltura(this);
     }
 
     public int fatorBalanceamento(){
-        return obterAltura(this.getFilho_direita()) - obterAltura(this.getFilho_esquerda());
+    	int alturaDir, alturaEsq = 0;
+    	alturaDir = this._obterAltura(this.getFilho_direita());
+    	alturaEsq = this._obterAltura(this.getFilho_esquerda());
+        return  (alturaDir - alturaEsq);
     }
     
     /*GETTERs E SETERs*/
@@ -37,7 +53,7 @@ public class No<T> {
     }
 
     public No<T> getFilho_esquerda() {
-        return filho_esquerda;
+        return this.filho_esquerda;
     }
 
     public void setFilho_esquerda(No<T> filho_esquerda) {
@@ -45,7 +61,7 @@ public class No<T> {
     }
 
     public No<T> getFilho_direita() {
-        return filho_direita;
+        return this.filho_direita;
     }
 
     public void setFilho_direita(No<T> filho_direita) {
