@@ -1,12 +1,15 @@
+package Grafo;
+import java.util.ArrayList;
+
 public class Grafo<T> {
-    private ArrayList<Aresta> arestas;
+    private ArrayList<Aresta<T>> arestas;
     private ArrayList<Vertice<T>> vertices;
 
     // Outros membros da classe, como vértices e arestas
 
     public void adicionarAresta(T origem, T destino, float peso) {
         Vertice<T> verticeOrigem, verticeDestino;
-        Aresta novaAresta;
+        Aresta<T> novaAresta;
 
         // Busco o vértice com o valor de origem
         verticeOrigem = obterVertice(origem);
@@ -23,7 +26,7 @@ public class Grafo<T> {
             verticeDestino = adicionarVertice(destino);
 
         // Agora crio a aresta que vai de origem para destino
-        novaAresta = new Aresta(verticeOrigem, verticeDestino, peso);
+        novaAresta = new Aresta<T>(verticeOrigem, verticeDestino);
 
         // Adicionei a aresta à Lista do Grafo
         this.arestas.add(novaAresta);
