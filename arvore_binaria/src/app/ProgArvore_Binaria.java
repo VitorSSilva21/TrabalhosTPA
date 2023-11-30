@@ -11,7 +11,7 @@ public class ProgArvore_Binaria {
     	GeradorDeArvores gerador = new GeradorDeArvores();
     	ComparadorAlunoPorMatricula comp = new ComparadorAlunoPorMatricula();
         ArvoreAVL<Aluno> arvore = new ArvoreAVL<Aluno>(comp);
-        gerador.geraArvoreDegenerada(15, arvore);
+        gerador.geraArvoreDegenerada(7, arvore);
         System.out.println(arvore.caminharEmNivel());
     }
 }
