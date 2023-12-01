@@ -1,6 +1,8 @@
 package Grafo;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Grafo<T> {
     private ArrayList<Vertice<T>> vertices;
@@ -72,4 +74,37 @@ public class Grafo<T> {
 	    }
 		return saida;
 	}
+
+	public boolean temCiclo() {
+        Set<Vertice<T>> visitados = new HashSet<>();
+        Set<Vertice<T>> pilhaRecursao = new HashSet<>();
+
+        for (Vertice<T> vertice : vertices) {
+            if (!visitados.contains(vertice)) {
+                if (temCicloRecursivo(vertice, visitados, pilhaRecursao)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean temCicloRecursivo(Vertice<T> vertice, Set<Vertice<T>> visitados, Set<Vertice<T>> pilhaRecursao) {
+        visitados.add(vertice);
+        pilhaRecursao.add(vertice);
+
+        for (Vertice<T> destino : vertice.getDestinos()) {
+            if (!visitados.contains(destino)) {
+                if (temCicloRecursivo(destino, visitados, pilhaRecursao)) {
+                    return true;
+                }
+            } else if (pilhaRecursao.contains(destino)) {
+                return true;
+            }
+        }
+
+        pilhaRecursao.remove(vertice);
+        return false;
+    }
 }
