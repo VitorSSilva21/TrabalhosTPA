@@ -8,6 +8,7 @@ public class Vertice <T> {
     
     public Vertice(T valor){
     	this.valor= valor;
+	this.destinos = new ArrayList<>();
     }
     
     public void addDestino(Vertice<T> dest,Comparator<T> c) {
@@ -37,4 +38,9 @@ public class Vertice <T> {
     public String toString(){
     	return "" + this.getValor().toString();
     }
+
+	public ArrayList<Vertice<T>> getDestinos() {
+        	return this.destinos;
+    	}
+
 }
