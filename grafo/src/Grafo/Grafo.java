@@ -54,6 +54,13 @@ public class Grafo<T> {
     	return null;
     }
 
+
+    public void removerAresta(Vertice<T> origem, Vertice<T> destino) {
+        if (origem != null && destino != null) {
+            origem.rmvDestino(destino, comp);
+        }
+    }
+
     private Vertice<T> obterVertice(T valor) {
         Vertice<T> v;
         v = new Vertice<T>(valor);
