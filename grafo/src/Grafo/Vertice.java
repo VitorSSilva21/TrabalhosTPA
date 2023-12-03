@@ -5,10 +5,12 @@ import java.util.Comparator;
 public class Vertice <T> {
 	private T valor;
     private ArrayList<Vertice<T>> destinos;
+	private boolean visitado;
     
     public Vertice(T valor){
     	this.valor= valor;
-	this.destinos = new ArrayList<>();
+		this.destinos = new ArrayList<>();
+		this.visitado = false;
     }
     
     public void addDestino(Vertice<T> dest,Comparator<T> c) {
