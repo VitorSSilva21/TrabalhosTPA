@@ -1,6 +1,7 @@
 package App;
 import Grafo.Grafo;
 
+
 public class Teste {
 
 	public static void main(String[] args) {
@@ -15,8 +16,7 @@ public class Teste {
 		teste.adicionarVertice(d3);
 		teste.adicionarVertice(d4);
 		System.out.println(teste.toString());
-		teste.removerVertice(d2);
-		System.out.println(teste.toString());
+		teste.adicionarAresta(d1, d2);
 		teste.ordenacaoTopologica();
 	}
 

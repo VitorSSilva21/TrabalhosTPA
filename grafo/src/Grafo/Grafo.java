@@ -15,8 +15,12 @@ public class Grafo<T> {
     }
     
     //Outros membros da classe, como vértices e arestas
-    public void adicionarAresta(Vertice<T> origem, Vertice<T> destino) {
-        origem.addDestino(destino, comp);
+    public void adicionarAresta(T origem, T destino) {
+    	Vertice<T> tori; 
+    	Vertice<T> tdest;
+    	tori = this.obterVertice(origem);
+    	tdest = this.obterVertice(destino);
+        tori.addDestino(tdest, comp);
     }
 
     public Vertice<T> adicionarVertice(T valor) {
@@ -117,7 +121,7 @@ public class Grafo<T> {
         return false;
     }
 
-    private void ordenacaoTopologicaAuxiliar(Vertice<T> vert, Stack pilha){
+    private void ordenacaoTopologicaAuxiliar(Vertice<T> vert, Stack<T> pilha){
         vert.setVisitado(true); //Marca o vértice atual como visitado;
 
         if (!vert.getDestinos().isEmpty()){ //Verifica se o ArrayList de destinos está vazio
@@ -133,7 +137,7 @@ public class Grafo<T> {
 
     public void ordenacaoTopologica(){
         Vertice<T> vertice = this.vertices.get(0);
-        Stack pilha = new Stack();
+        Stack<T> pilha = new Stack<T>();
 
         for(Vertice<T> v : this.vertices){
             v.setVisitado(false); //Coloca todos os vértices como não visitados

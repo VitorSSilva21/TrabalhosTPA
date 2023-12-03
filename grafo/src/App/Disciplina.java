@@ -32,7 +32,7 @@ public class Disciplina {
 	
 	@Override
 	public String toString(){
-		return this.nome + ", " + this.codigo + ", " + this.periodo;
+		return this.codigo + "-" + this.nome + ", ";
 	}
 
 }
