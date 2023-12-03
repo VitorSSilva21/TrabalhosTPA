@@ -45,4 +45,19 @@ public class Vertice <T> {
         	return this.destinos;
     	}
 
+	public void setValor(T valor) {
+		this.valor = valor;
+	}
+
+	public void setDestinos(ArrayList<Vertice<T>> destinos) {
+		this.destinos = destinos;
+	}
+
+	public boolean isVisitado() {
+		return visitado;
+	}
+
+	public void setVisitado(boolean visitado) {
+		this.visitado = visitado;
+	}
 }

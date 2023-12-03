@@ -1,8 +1,10 @@
 package Grafo;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 
 public class Grafo<T> {
     private ArrayList<Vertice<T>> vertices;
@@ -19,13 +21,13 @@ public class Grafo<T> {
 
     public Vertice<T> adicionarVertice(T valor) {
     	if(this.vertices == null) {
-    		this.vertices = new ArrayList<Vertice<T>>();
-    		Vertice<T> novo = new Vertice<T>(valor);
+    		this.vertices = new ArrayList<>();
+    		Vertice<T> novo = new Vertice<>(valor);
             this.vertices.add(novo);
             return novo;
     	}
     	else if(this.obterVertice(valor)==null) {
-    		Vertice<T> novo = new Vertice<T>(valor);
+    		Vertice<T> novo = new Vertice<>(valor);
             this.vertices.add(novo);
             return novo;
     	}
@@ -37,7 +39,7 @@ public class Grafo<T> {
     
     public Vertice<T> removerVertice(T valor){
     	Vertice<T> v;
-        v = new Vertice<T>(valor);
+        v = new Vertice<>(valor);
     	if(this.vertices == null) {
     		return null;
     	}
@@ -63,7 +65,7 @@ public class Grafo<T> {
 
     private Vertice<T> obterVertice(T valor) {
         Vertice<T> v;
-        v = new Vertice<T>(valor);
+        v = new Vertice<>(valor);
         for (int i = 0; i < this.vertices.size(); i++) {
             if (comp.compare(v.getValor(), this.vertices.get(i).getValor())==0) {
                 return v;
@@ -113,5 +115,40 @@ public class Grafo<T> {
 
         pilhaRecursao.remove(vertice);
         return false;
+    }
+
+    private void ordenacaoTopologicaAuxiliar(Vertice<T> vert, Stack pilha){
+        vert.setVisitado(true); //Marca o vértice atual como visitado;
+
+        if (!vert.getDestinos().isEmpty()){ //Verifica se o ArrayList de destinos está vazio
+            for(Vertice<T> ve : vert.getDestinos()) { //Se não estiver, percorre-o para visitar os vertices de destino
+                ordenacaoTopologicaAuxiliar(ve, pilha);
+            }
+        }
+        /*Se estiver vazio, significa que não há vertices de destino.
+        Coloca o valor do vertice na pilha para ordenação topológica.
+        */
+        pilha.push(vert.getValor());
+    }
+
+    public void ordenacaoTopologica(){
+        Vertice<T> vertice = this.vertices.get(0);
+        Stack pilha = new Stack();
+
+        for(Vertice<T> v : this.vertices){
+            v.setVisitado(false); //Coloca todos os vértices como não visitados
+        }
+
+        for(Vertice<T> v : this.vertices){
+            if (!v.isVisitado()){
+                ordenacaoTopologicaAuxiliar(v, pilha);
+            }
+        }
+        System.out.print("Ordenação Topológica: ");
+        // Imprime o conteúdo da pilha na ordem topológica
+        while (!pilha.empty()) {
+            System.out.print(pilha.pop() + " ");
+        }
+        System.out.println("\n");
     }
 }
