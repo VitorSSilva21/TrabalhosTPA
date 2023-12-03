@@ -17,7 +17,7 @@ public class Teste {
 		System.out.println(teste.toString());
 		teste.removerVertice(d2);
 		System.out.println(teste.toString());
-
+		teste.ordenacaoTopologica();
 	}
 
 }
