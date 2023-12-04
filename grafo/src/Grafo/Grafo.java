@@ -121,38 +121,42 @@ public class Grafo<T> {
         return false;
     }
 
-    private void ordenacaoTopologicaAuxiliar(Vertice<T> vert, Stack<T> pilha){
-        vert.setVisitado(true); //Marca o vértice atual como visitado;
-
+    private void ordenacaoTopologicaAuxiliar(Vertice<T> vert, Stack<T> pilha, Stack<T> pilhaOrdenada){
+    	pilha.push(vert); //Empilha o vertice na pilha
+    	vert.setVisitado(true); //Marca o vértice atual como visitado;
+	
         if (!vert.getDestinos().isEmpty()){ //Verifica se o ArrayList de destinos está vazio
             for(Vertice<T> ve : vert.getDestinos()) { //Se não estiver, percorre-o para visitar os vertices de destino
                 ordenacaoTopologicaAuxiliar(ve, pilha);
             }
         }
-        /*Se estiver vazio, significa que não há vertices de destino.
-        Coloca o valor do vertice na pilha para ordenação topológica.
-        */
-        pilha.push(vert.getValor());
+        pilhaOrdenada.push(pilha.pop());
     }
 
-    public void ordenacaoTopologica(){
+    public ArrayList<Vertice<T>> ordenacaoTopologica(){
+    	ArrayList<Vertice<T>> ordenadosTOP = new ArrayList<>();
         Vertice<T> vertice = this.vertices.get(0);
         Stack<T> pilha = new Stack<T>();
+        Stack<T> pilhaOrdenada = new Stack<T>();
+        Vertice<T> aux = new Vertice<>();
 
         for(Vertice<T> v : this.vertices){
             v.setVisitado(false); //Coloca todos os vértices como não visitados
         }
 
-        for(Vertice<T> v : this.vertices){
-            if (!v.isVisitado()){
-                ordenacaoTopologicaAuxiliar(v, pilha);
-            }
+        if (!v.isVisitado()){
+           ordenacaoTopologicaAuxiliar(vertice, pilha, pilhaOrdenada);
         }
+	    
         System.out.print("Ordenação Topológica: ");
-        // Imprime o conteúdo da pilha na ordem topológica
-        while (!pilha.empty()) {
-            System.out.print(pilha.pop() + " ");
+        // Coloca os vertices da pilha no ArrayList de retorno e Imprime o conteúdo da pilha na ordem topológica
+        while (!pilhaOrdenada.empty()) {
+            aux = pilhaOrdenada.pop();
+            ordenadosTOP.add(aux);
+            System.out.print(aux.toString());
         }
         System.out.println("\n");
+        
+        return ordenadosTOP;
     }
 }
