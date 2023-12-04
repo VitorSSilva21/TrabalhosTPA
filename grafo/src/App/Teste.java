@@ -7,6 +7,7 @@ public class Teste {
 	public static void main(String[] args) {
 		ComparaDisciplinasNome<Disciplina> c = new ComparaDisciplinasNome<Disciplina>();
 		Grafo<Disciplina> teste = new Grafo<Disciplina>(c);
+		ArrayList<Vertice<T>> ordenacaoTOP = new ArrayList<>();
 		Disciplina d1 = new Disciplina("logica", 001, 1);
 		Disciplina d2 = new Disciplina("programacao", 002, 1);
 		Disciplina d3 = new Disciplina("comunicacao", 003, 1);
@@ -17,7 +18,7 @@ public class Teste {
 		teste.adicionarVertice(d4);
 		System.out.println(teste.toString());
 		teste.adicionarAresta(d1, d2);
-		teste.ordenacaoTopologica();
+		ordenacaoTOP = teste.ordenacaoTopologica();	
 	}
 
 }
