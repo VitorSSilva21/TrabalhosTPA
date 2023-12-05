@@ -98,14 +98,14 @@ public class Grafo<T> {
         Set<Vertice<T>> visitados = new HashSet<>();
 
         for (Vertice<T> vertice : this.vertices) {
-        	//System.out.println(vertice);
+            //System.out.println(vertice);
             if (!(visitados.contains(vertice))) {
             	visitados.add(vertice);
             	for (Vertice<T> vizinho : vertice.getDestinos()) {
-            		//System.out.println(vizinho);
-            		if (visitados.contains(vizinho)) {
-            			return true;
-            		}
+            	   //System.out.println(vizinho);
+            	   if (visitados.contains(vizinho)) {
+            		return true;
+            	   }
             	}
             }
             else return true;
@@ -122,7 +122,7 @@ public class Grafo<T> {
                 ordenacaoTopologicaAuxiliar(ve, pilha,pilhaOrdenada);
             }
         }
-        pilhaOrdenada.push(pilha.pop());
+        pilhaOrdenada.push(pilha.pop()); //Empilha na pilhaOrdenada o vértice que já foi visitado e não possui vértice adjacente
     }
 
     public ArrayList<Vertice<T>> ordenacaoTopologica(){
@@ -131,7 +131,6 @@ public class Grafo<T> {
         //Vertice<T> vertice = this.vertices.get(0);
         Stack<Vertice<T>> pilha = new Stack<Vertice<T>>();
         Stack<Vertice<T>> pilhaOrdenada = new Stack<Vertice<T>>();
-        Vertice<T> aux = null;
 
         for(Vertice<T> v : this.vertices){
             v.setVisitado(false); //Coloca todos os vértices como não visitados
@@ -147,12 +146,9 @@ public class Grafo<T> {
         System.out.print("Ordenação Topológica: ");
         // Coloca os vertices da pilha no ArrayList de retorno e Imprime o conteúdo da pilha na ordem topológica
         while (!pilhaOrdenada.empty()) {
-            aux = pilhaOrdenada.pop();
-            ordenadosTOP.add(aux);
+            ordenadosTOP.add(pilhaOrdenada.pop()); //Coloca na lista de ordenados o topo da pilha
         }
-        System.out.println("\n");
-        
-        return ordenadosTOP;
+        return ordenadosTOP; //Retorna o ArrayList ordenado topologicamente
     }
     
     public void printArestas() {
