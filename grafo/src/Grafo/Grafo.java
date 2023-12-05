@@ -113,24 +113,19 @@ public class Grafo<T> {
         return false;
     }
 
-    private void ordenacaoTopologicaAuxiliar(Vertice<T> vert, Stack<Vertice<T>> pilha, Stack<Vertice<T>> pilhaOrdenada){
-    	pilha.push(vert); //Empilha o vertice na pilha
+    private void ordenacaoTopologicaAuxiliar(Vertice<T> vert, Stack<Vertice<T>> pilha){
     	vert.setVisitado(true); //Marca o vértice atual como visitado;
-	
         if (!vert.getDestinos().isEmpty()){ //Verifica se o ArrayList de destinos está vazio
             for(Vertice<T> ve : vert.getDestinos()) { //Se não estiver, percorre-o para visitar os vertices de destino
                 ordenacaoTopologicaAuxiliar(ve, pilha,pilhaOrdenada);
             }
         }
-        pilhaOrdenada.push(pilha.pop()); //Empilha na pilhaOrdenada o vértice que já foi visitado e não possui vértice adjacente
+        pilha.push(vert); //Empilha na pilha o vértice que já foi visitado
     }
 
     public ArrayList<Vertice<T>> ordenacaoTopologica(){
-    	//Vertice<T> indice = this.obterVertice(inicio);
     	ArrayList<Vertice<T>> ordenadosTOP = new ArrayList<>();
-        //Vertice<T> vertice = this.vertices.get(0);
         Stack<Vertice<T>> pilha = new Stack<Vertice<T>>();
-        Stack<Vertice<T>> pilhaOrdenada = new Stack<Vertice<T>>();
 
         for(Vertice<T> v : this.vertices){
             v.setVisitado(false); //Coloca todos os vértices como não visitados
@@ -138,13 +133,13 @@ public class Grafo<T> {
         }
         for(Vertice<T> p : this.vertices){
         	if (!p.isVisitado()){
- 	           ordenacaoTopologicaAuxiliar(p, pilha, pilhaOrdenada);
+ 	           ordenacaoTopologicaAuxiliar(p, pilha);
         	}
         }
         
         // Coloca os vertices da pilha no ArrayList de retorno e Imprime o conteúdo da pilha na ordem topológica
-        while (!pilhaOrdenada.empty()) {
-            ordenadosTOP.add(pilhaOrdenada.pop()); //Coloca na lista de ordenados o topo da pilha
+        while (!pilha.empty()) {
+            ordenadosTOP.add(pilha.pop()); //Coloca na lista de ordenados o topo da pilha
         }
         return ordenadosTOP; //Retorna o ArrayList ordenado topologicamente
     }
