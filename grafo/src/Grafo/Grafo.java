@@ -142,8 +142,6 @@ public class Grafo<T> {
         	}
         }
         
-        
-        System.out.print("Ordenação Topológica: ");
         // Coloca os vertices da pilha no ArrayList de retorno e Imprime o conteúdo da pilha na ordem topológica
         while (!pilhaOrdenada.empty()) {
             ordenadosTOP.add(pilhaOrdenada.pop()); //Coloca na lista de ordenados o topo da pilha
