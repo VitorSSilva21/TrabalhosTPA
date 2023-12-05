@@ -113,25 +113,6 @@ public class Grafo<T> {
         return false;
     }
 
-    /*private boolean temCicloRecursivo(Vertice<T> vertice, Set<Vertice<T>> visitados, Set<Vertice<T>> pilhaRecursao) {
-        visitados.add(vertice);
-        pilhaRecursao.add(vertice);
-
-        for (Vertice<T> destino : vertice.getDestinos()) {
-            if (!visitados.contains(destino)) {
-                if (temCicloRecursivo(destino, visitados, pilhaRecursao)) {
-                    return true;
-                }
-            } else if (pilhaRecursao.contains(destino)) {
-                return true;
-            }
-        }
-
-        pilhaRecursao.remove(vertice);
-        return false;
-    }
-    */
-
     private void ordenacaoTopologicaAuxiliar(Vertice<T> vert, Stack<Vertice<T>> pilha, Stack<Vertice<T>> pilhaOrdenada){
     	pilha.push(vert); //Empilha o vertice na pilha
     	vert.setVisitado(true); //Marca o vértice atual como visitado;
@@ -168,7 +149,6 @@ public class Grafo<T> {
         while (!pilhaOrdenada.empty()) {
             aux = pilhaOrdenada.pop();
             ordenadosTOP.add(aux);
-            //System.out.print(aux.toString());
         }
         System.out.println("\n");
         
