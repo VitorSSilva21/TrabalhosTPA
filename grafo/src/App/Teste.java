@@ -34,6 +34,7 @@ public class Teste {
 		teste.printArestas();
 		
 		ordenacaoTOP = teste.ordenacaoTopologica();	
+		System.out.print("Ordenação Topológica: ");
 		System.out.println(ordenacaoTOP.toString());
 	}
 
