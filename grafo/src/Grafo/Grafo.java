@@ -34,17 +34,17 @@ public class Grafo<T> {
     	return adicionado;
     }
 
-    public Vertice<T> adicionarVertice(T valor) {
+    public T adicionarVertice(T valor) {
     	if(this.vertices == null) {
     		this.vertices = new ArrayList<>();
     		Vertice<T> novo = new Vertice<>(valor);
             this.vertices.add(novo);
-            return novo;
+            return novo.getValor();
     	}
     	else if(this.obterVertice(valor)==null) {
     		Vertice<T> novo = new Vertice<>(valor);
             this.vertices.add(novo);
-            return novo;
+            return novo.getValor();
     	}
     	else{
     		return null;
@@ -88,6 +88,7 @@ public class Grafo<T> {
         return null;
     }
 
+
 	@Override 
 	public String toString(){
 		String saida ="";
@@ -129,7 +130,7 @@ public class Grafo<T> {
         return false;
     }
     
-    private void ordenacaoTopologicaAuxiliar(Vertice<T> vert, Stack<Vertice<T>> pilha){
+    private void ordenacaoTopologicaAuxiliar(Vertice<T> vert, Stack<T> pilha){
     	vert.setVisitado(true); //Marca o vértice atual como visitado;
         if (!vert.getDestinos().isEmpty()){ //Verifica se o ArrayList de destinos está vazio
             for(Vertice<T> ve : vert.getDestinos()) { //Se não estiver, percorre-o para visitar os vertices de destino
@@ -139,11 +140,11 @@ public class Grafo<T> {
                 
             }
         }
-        pilha.push(vert); //Empilha na pilha o vértice que já foi visitado
+        pilha.push(vert.getValor()); //Empilha na pilha o vértice que já foi visitado
     }
 
-    public ArrayList<Vertice<T>> ordenacaoTopologica(){
-    	ArrayList<Vertice<T>> ordenadosTOP = new ArrayList<>();
+    public ArrayList<T> ordenacaoTopologica(){
+    	ArrayList<T> ordenadosTOP = new ArrayList<>();
     	
     	if(this.temCiclo()) {
     		System.out.println("\nO grafo atualmente tem um ciclo, logo, ordenação topológica não pode ser executado. \n");
@@ -151,7 +152,7 @@ public class Grafo<T> {
     	}
     	
     	
-        Stack<Vertice<T>> pilha = new Stack<Vertice<T>>();
+        Stack<T> pilha = new Stack<T>();
 
         for(Vertice<T> v : this.vertices){
             v.setVisitado(false); //Coloca todos os vértices como não visitados
@@ -177,6 +178,12 @@ public class Grafo<T> {
     			System.out.println(vertices.get(i) + " " + aux.get(p).toString());
     		}
     	}
+    }
+    
+    public ArrayList<Vertice<T>> printGrafo() {
+		System.out.println(this.toString());
+		return this.vertices;
+
     }
     
 }
