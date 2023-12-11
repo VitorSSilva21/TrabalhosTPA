@@ -392,5 +392,9 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
     	this.pilhaDeNavegacao = new ArrayList<No<T>>();
         this._reiniciarNavegacao(this.raiz);
     }
+    
+    public No<T> getRaiz() {
+    	return this.raiz;
+    }
   
 }

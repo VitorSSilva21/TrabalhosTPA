@@ -12,17 +12,25 @@ public class Relatorio_Livros{
 
         // Criando um scanner para interação com o usuário
         Scanner scanner = new Scanner(System.in);
+        int opcao = 0;
 
-        while (true) {
+        while (opcao != 999) {
             System.out.println("\n----- Menu Principal -----");
             System.out.println("1. Cadastrar um livro");
             System.out.println("2. Consultar dados de um livro");
             System.out.println("3. Excluir um livro");
             System.out.println("4. Exibir todos os livros");
-            System.out.println("5. Sair");
+            System.out.println("999. Sair\n");
 
             System.out.print("Escolha uma opção: ");
-            int opcao = scanner.nextInt();
+            try{
+            	opcao = scanner.nextInt();
+            }
+            catch(Exception e){
+            	System.out.println("Opção inválida, tente novamente\n");
+            	opcao = 0;
+            }
+            
             scanner.nextLine(); // Limpar o buffer do scanner
 
             switch (opcao) {
@@ -38,9 +46,8 @@ public class Relatorio_Livros{
                 case 4:
                     exibirTodosLivros(arvoreLivros);
                     break;
-                case 5:
+                case 999:
                     System.out.println("Saindo do programa. Até logo!");
-                    System.exit(0);
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
@@ -131,6 +138,7 @@ public class Relatorio_Livros{
             S.nextLine();
         }
     }
+    
     private static Livro obterLivroPorIndiceRecursivo(No<Livro> no, int[] contador, int indiceAlvo) {
         if (no == null) {
             return null;
@@ -160,4 +168,6 @@ public class Relatorio_Livros{
 
         return obterLivroPorIndiceRecursivo(arvoreLivros.getRaiz(), contador, indice);
     }
+    
+   
 }

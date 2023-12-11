@@ -19,9 +19,16 @@ public class AplicacaoLivro {
 	}
 	
 	public static int pedeEntradaInt(Scanner sc) {
-		int i = sc.nextInt();
-		sc.nextLine(); // This line you have to add (it consumes the \n character)
-	    return i;
+		try{
+			int i = sc.nextInt();
+			sc.nextLine(); // This line you have to add (it consumes the \n character)
+			return i;
+		}
+		catch(Exception e) {
+			sc.nextLine();
+			System.out.println("valor inválido, tente novamente");
+			return 0;
+		}
 	}
 	
 	public static String pedeEntradaString(Scanner sc) {
