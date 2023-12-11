@@ -21,6 +21,7 @@ public class Grafo<T> {
     	tori = this.obterVertice(origem);
     	tdest = this.obterVertice(destino);
     	boolean adicionado = tori.addDestino(tdest, comp);
+    	/*
     	boolean temciclo = this.temCiclo();
     	if (temciclo) {
     		this.removerAresta(tori, tdest);
@@ -29,6 +30,8 @@ public class Grafo<T> {
     	else {
     		return adicionado;
     	}
+    	*/
+    	return adicionado;
     }
 
     public Vertice<T> adicionarVertice(T valor) {
@@ -93,31 +96,47 @@ public class Grafo<T> {
 	    }
 		return saida;
 	}
-
 	public boolean temCiclo() {
         Set<Vertice<T>> visitados = new HashSet<>();
+        Set<Vertice<T>> pilhaRecursao = new HashSet<>();
 
-        for (Vertice<T> vertice : this.vertices) {
-            //System.out.println(vertice);
-            if (!(visitados.contains(vertice))) {
-            	visitados.add(vertice);
-            	for (Vertice<T> vizinho : vertice.getDestinos()) {
-            	   //System.out.println(vizinho);
-            	   if (visitados.contains(vizinho)) {
-            		return true;
-            	   }
-            	}
+        for (Vertice<T> vertice : vertices) {
+            if (!visitados.contains(vertice)) {
+                if (temCicloRecursivo(vertice, visitados, pilhaRecursao)) {
+                    return true;
+                }
             }
-            else return true;
         }
+
         return false;
     }
 
+    private boolean temCicloRecursivo(Vertice<T> vertice, Set<Vertice<T>> visitados, Set<Vertice<T>> pilhaRecursao) {
+        visitados.add(vertice);
+        pilhaRecursao.add(vertice);
+
+        for (Vertice<T> destino : vertice.getDestinos()) {
+            if (!visitados.contains(destino)) {
+                if (temCicloRecursivo(destino, visitados, pilhaRecursao)) {
+                    return true;
+                }
+            } else if (pilhaRecursao.contains(destino)) {
+                return true;
+            }
+        }
+
+        pilhaRecursao.remove(vertice);
+        return false;
+    }
+    
     private void ordenacaoTopologicaAuxiliar(Vertice<T> vert, Stack<Vertice<T>> pilha){
     	vert.setVisitado(true); //Marca o vértice atual como visitado;
         if (!vert.getDestinos().isEmpty()){ //Verifica se o ArrayList de destinos está vazio
             for(Vertice<T> ve : vert.getDestinos()) { //Se não estiver, percorre-o para visitar os vertices de destino
-                ordenacaoTopologicaAuxiliar(ve, pilha,pilhaOrdenada);
+            	if(!ve.isVisitado()) {
+            		ordenacaoTopologicaAuxiliar(ve, pilha);
+            	}
+                
             }
         }
         pilha.push(vert); //Empilha na pilha o vértice que já foi visitado
@@ -125,6 +144,13 @@ public class Grafo<T> {
 
     public ArrayList<Vertice<T>> ordenacaoTopologica(){
     	ArrayList<Vertice<T>> ordenadosTOP = new ArrayList<>();
+    	
+    	if(this.temCiclo()) {
+    		System.out.println("\nO grafo atualmente tem um ciclo, logo, ordenação topológica não pode ser executado. \n");
+    		return ordenadosTOP;
+    	}
+    	
+    	
         Stack<Vertice<T>> pilha = new Stack<Vertice<T>>();
 
         for(Vertice<T> v : this.vertices){
