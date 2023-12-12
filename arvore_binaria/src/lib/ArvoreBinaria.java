@@ -107,88 +107,60 @@ public class ArvoreBinaria<T> implements IArvoreBinaria<T> {
      * @param valor - valor a ser procurado e excluído
      * @return caso tenha sido encontrado um elemento com o valor buscado, o elemento será removido da árvore e seu valor (do tipo T) será retornado. Caso contrário retorna null.
      */
-    private T _remover(No<T>r, No<T>p, int d, T valor) {
-    	T retorno;
-    	//retorna nulo se receber nulo
-    	if(r==null) {
-    		return null;
-    	}
-    	//para guardar o valor de retorno
-    	T ret = r.getChave();
-    	//se a arvore estiver vazia
-        if (this.raiz==null) {
-        	return null;
+    private T _remover(No<T> r, No<T> p, int d, T valor) {
+        // Retorna nulo se receber nulo
+        if (r == null) {
+            return null;
         }
-        //se o valor for menor que a raiz
-        else if(comparador.compare( valor,r.getChave())<0){
-        	_remover(r.getFilho_esquerda(),r,0,valor);
+
+        // Guarda o valor de retorno
+        T ret = r.getChave();
+
+        // Se o valor for menor que a raiz
+        if (comparador.compare(valor, r.getChave()) < 0) {
+            ret = _remover(r.getFilho_esquerda(), r, 0, valor);
         }
-        //se o valor for maior que a raiz
-        else if(comparador.compare( valor,r.getChave())>0){
-            _remover(r.getFilho_direita(),r,1,valor);
+        // Se o valor for maior que a raiz
+        else if (comparador.compare(valor, r.getChave()) > 0) {
+            ret = _remover(r.getFilho_direita(), r, 1, valor);
         }
-        //se o valor da raiz for igual o valor recebido
+        // Se o valor da raiz for igual ao valor recebido
         else {
-        	//se o nó não tem filhos
-        	if(r.getFilho_esquerda()==null&&r.getFilho_direita()==null){
-        		//se a raiz r for o filho esquerdo de p
-        		if(d==0) {
-        			ret =  p.getFilho_esquerda().getChave();
-        			p.setFilho_esquerda(null);
-        		}
-        		//se for o filho direito
-        		else {
-        			ret = p.getFilho_direita().getChave();
-        			p.setFilho_direita(null);
-        		}
-        	}
-        	//se o nó tem apenas um filho e é o esquerdo
-        	else if(r.getFilho_direita()==null && r.getFilho_esquerda()!=null) {
-        		//se a raiz r for o filho esquerdo de p
-        		if(d==0) {
-        			ret = p.getFilho_esquerda().getChave();
-        			p.setFilho_esquerda(r.getFilho_esquerda());
-        		}
-        		//se for o filho direito
-        		else {
-        			ret = p.getFilho_direita().getChave();
-        			p.setFilho_direita(r.getFilho_esquerda());
-        		}
-        	}
-        	//se o nó tem apenas um filhoe e é o direito
-        	else if(r.getFilho_direita()!=null && r.getFilho_esquerda()==null) {
-        		//se a raiz r for o filho esquerdo de p
-        		if(d==0) {
-        			ret = p.getFilho_esquerda().getChave();
-        			p.setFilho_esquerda(r.getFilho_direita());
-        		}
-        		//se for o filho direito
-        		else {
-        			ret = p.getFilho_direita().getChave();
-        			p.setFilho_direita(r.getFilho_direita());
-        		}
-        	}
-        	//se o nó tem dois filhos
-        	else {
-        		//aux para maior entre os menores
-        		No<T> aux = r.getFilho_esquerda();
-        		//aux2 para pai do aux1
-        		No<T> aux2 = r;
-        		while (aux.getFilho_direita()!=null) {
-        			aux = aux.getFilho_direita();
-        			if(aux2 == r){
-        				aux2 = aux2.getFilho_esquerda();
-        			}
-        			else
-        				aux2 = aux2.getFilho_direita();
-        		}
-        		//troca o valor da raiz de subarvore pelo maior dentre os menores
-        		ret = r.getChave();
-    			r.setChave(aux.getChave());
-    			//usa aux2 para remover o maior da subarvore esquerda da posição original
-    			aux2.setFilho_direita(null);
-        	}
+            // Se o nó não tem filhos ou tem apenas um filho
+            if (r.getFilho_esquerda() == null) {
+                // Atualiza para o filho direito (pode ser nulo)
+                if (d == 0) {
+                    p.setFilho_esquerda(r.getFilho_direita());
+                } else {
+                    p.setFilho_direita(r.getFilho_direita());
+                }
+            } else if (r.getFilho_direita() == null) {
+                // Atualiza para o filho esquerdo
+                p.setFilho_direita(r.getFilho_esquerda());
+            }
+            // Se o nó tem dois filhos
+            else {
+                No<T> antecessor = r.getFilho_esquerda();
+                No<T> antecessorPai = r;
+
+                // Encontra o antecessor
+                while (antecessor.getFilho_direita() != null) {
+                    antecessorPai = antecessor;
+                    antecessor = antecessor.getFilho_direita();
+                }
+
+                // Atualiza a raiz com o valor do antecessor
+                r.setChave(antecessor.getChave());
+
+                // Remove o antecessor (pode ser r ou r.getFilho_esquerda())
+                if (antecessorPai == r) {
+                    antecessorPai.setFilho_esquerda(antecessor.getFilho_esquerda());
+                } else {
+                    antecessorPai.setFilho_direita(antecessor.getFilho_esquerda());
+                }
+            }
         }
+
         return ret;
     }
 
